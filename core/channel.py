@@ -10,7 +10,8 @@ class Channel:
 
         # Consider # as part of the query string, end encode \n
         self.url = self.args.get('url').replace('#', '%23').replace('\\n', '%0A')
-
+        self.http_proxy = self.args.get('http-proxy')
+        self.https_proxy = self.args.get('https-proxy')
         self.base_url = self.url.split("?")[0] if '?' in self.url else self.url
 
         self.data = {}
@@ -113,13 +114,19 @@ class Channel:
             else:
                 header_placeholder = self.header_placeholders[0]
                 header_params[header_placeholder] = injection
-
+        proxyDict=None
+        if(self.http_proxy or self.https_proxy):
+            proxyDict = { 
+                "http"  : self.http_proxy, 
+                "https" : self.https_proxy,             
+            }
         result = requests.request(
             method = self.http_method,
             url = self.base_url,
             params = get_params,
             data = post_params,
-            headers = header_params
+            headers = header_params,
+            proxies=proxyDict,
             ).text
 
         log.debug('\n> """%s"""\n< """%s"""' % (injection, result) )
