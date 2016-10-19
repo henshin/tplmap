@@ -12,7 +12,10 @@ class Channel:
         self.url = self.args.get('url').replace('#', '%23').replace('\\n', '%0A')
         self.http_proxy = self.args.get('http_proxy')
         print "Proxy is: "+self.http_proxy
-        self.https_proxy = self.args.get('https-proxy')
+        if("https" in self.http_proxy):
+            self.https_proxy = self.http_proxy
+            self.http_proxy = None
+
         self.base_url = self.url.split("?")[0] if '?' in self.url else self.url
 
         self.data = {}
@@ -128,6 +131,7 @@ class Channel:
             data = post_params,
             headers = header_params,
             proxies=proxyDict,
+            verify=False,
             ).text
 
         log.debug('\n> """%s"""\n< """%s"""' % (injection, result) )
