@@ -11,6 +11,7 @@ class Channel:
         # Consider # as part of the query string, end encode \n
         self.url = self.args.get('url').replace('#', '%23').replace('\\n', '%0A')
         self.http_proxy = self.args.get('http_proxy')
+        self.https_proxy = None
         print "Proxy is: "+self.http_proxy
         if("https" in self.http_proxy):
             self.https_proxy = self.http_proxy
@@ -121,8 +122,8 @@ class Channel:
         proxyDict=None
         if(self.http_proxy or self.https_proxy):
             proxyDict = { 
-                "http"  : self.http_proxy, 
-                "https" : self.https_proxy,             
+                "http"  : self.http_proxy,
+                "https" : self.https_proxy,
             }
         result = requests.request(
             method = self.http_method,
