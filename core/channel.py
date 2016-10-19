@@ -10,7 +10,8 @@ class Channel:
 
         # Consider # as part of the query string, end encode \n
         self.url = self.args.get('url').replace('#', '%23').replace('\\n', '%0A')
-        self.http_proxy = self.args.get('http-proxy')
+        self.http_proxy = self.args.get('http_proxy')
+        print "Proxy is: "+self.http_proxy
         self.https_proxy = self.args.get('https-proxy')
         self.base_url = self.url.split("?")[0] if '?' in self.url else self.url
 

@@ -54,7 +54,7 @@ request.add_option("-A","--user-agent",
                 dest="user_agent",
                 help="HTTP User-Agent header value."
                 )
-request.add_option("--http-proxy",
+request.add_option("-p","--proxy",
                 dest="http_proxy",
                 help="HTTP Proxy"
                 )
